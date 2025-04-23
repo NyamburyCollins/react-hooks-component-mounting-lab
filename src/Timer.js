@@ -3,19 +3,33 @@ import React, { Component } from "react";
 class Timer extends Component {
   state = {
     time: 0,
-    color: "#" + Math.floor(Math.random() * 16777215).toString(16)
+    color: `#${Math.floor(Math.random() * 16777215).toString(16).padStart(6, "0")}`,
   };
 
   // add your code here
+  interval = null; // Explicitly declare interval
+
   componentDidMount() {
-    this.interval = setInterval(() => {
-      this.clockTick()
-    }, 1000)
+    this.interval = setInterval(this.clockTick, 1000);
   }
 
   componentWillUnmount() {
-    this.stopClock()
+    clearInterval(this.interval); // Directly clear interval (no need for stopClock)
   }
+
+  clockTick = () => {
+    this.setState((prevState) => ({
+      time: prevState.time + 1,
+    }));
+  };
+
+  stopClock = () => {
+    clearInterval(this.interval);
+  };
+
+  handleClose = () => {
+    this.props.removeTimer(this.props.id);
+  };
 
   render() {
     const { time, color } = this.state;
@@ -28,22 +42,6 @@ class Timer extends Component {
       </section>
     );
   }
-
-  //clock functions
-  clockTick = () => {
-    this.setState(prevState => ({
-      time: prevState.time + 1
-    }));
-  };
-
-  stopClock = () => {
-    clearInterval(this.interval);
-  };
-
-  // for the 'x' button,
-  handleClose = () => {
-    this.props.removeTimer(this.props.id);
-  };
 }
 
 export default Timer;
