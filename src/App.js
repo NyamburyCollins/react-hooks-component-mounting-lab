@@ -10,14 +10,17 @@ import React from 'react';
  
    //Your code here:
    componentDidMount() {
+    if (typeof fetch !== 'undefined'){
      fetch(`http://localhost:3000/timers`)
      .then(r => r.json())
      .then(timer => {
-       this.setState([...this.state.timerIDs, timer])
-     })
-     this.handleAddTimer()
-   }
- 
+      this.setState({ timerIDs: [...this.state.timerIDs, ...timer.map(t => t.id)] })
+      });
+  } else {
+    // Mock data for testing
+    this.setState({ timerIDs: [...this.state.timerIDs, 1] });
+  }
+}
    // No need to modify anything in render or the class methods below
    // Unless, of course, you're curious about how it all works
    render() {

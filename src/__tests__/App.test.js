@@ -20,6 +20,7 @@ test("<App /> calls componentDidMount and adds a Timer", () => {
   appWrapper.unmount()
 })
 
+
 // describe('<App />', () => {
 //   var appWrapper
 

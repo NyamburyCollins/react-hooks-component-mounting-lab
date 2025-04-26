@@ -6,25 +6,25 @@ class Timer extends Component {
     color: `#${Math.floor(Math.random() * 16777215).toString(16).padStart(6, "0")}`,
   };
 
-  // add your code here
-  interval = null; // Explicitly declare interval
+  interval = null;
 
   componentDidMount() {
     this.interval = setInterval(this.clockTick, 1000);
   }
 
   componentWillUnmount() {
-    clearInterval(this.interval); // Directly clear interval (no need for stopClock)
+    clearInterval(this.interval); // Cleanup on unmount
   }
 
   clockTick = () => {
-    this.setState((prevState) => ({
-      time: prevState.time + 1,
+    this.setState(prevState => ({
+      time: prevState.time + 1
     }));
   };
 
   stopClock = () => {
-    clearInterval(this.interval);
+    clearInterval(this.interval); // For manual stopping via button
+    this.interval = null; // Clear the reference
   };
 
   handleClose = () => {
